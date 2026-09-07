@@ -137,7 +137,7 @@ public class DistribucionEjercicio1 extends JPanel {
         Random aleatorio = new Random();
 
         System.out.println(
-            "DISTRIBUCION DEL EJERCICIO 1"
+            " EJERCICIO 1 Parte 1 "
         );
 
         System.out.println(
@@ -160,10 +160,10 @@ public class DistribucionEjercicio1 extends JPanel {
             "N", "R", "X", "F(X)", "f(X)"
         );
 
-        // Simulacion
+        // Simulación
         for (int i = 1; i <= n; i++) {
 
-            // Generar numero aleatorio
+            // Generar número aleatorio
             double R = aleatorio.nextDouble();
 
             // Transformada inversa
@@ -186,7 +186,7 @@ public class DistribucionEjercicio1 extends JPanel {
         // Crear ventana de la grafica
         JFrame ventana =
             new JFrame(
-                "Distribucion del Ejercicio 1"
+                "Ejercicio 1 Parte 1 "
             );
 
         ventana.add(

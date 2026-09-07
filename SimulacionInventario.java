@@ -363,93 +363,90 @@ public class SimulacionInventario {
     }
 
     static Punto exploracion(
-            Punto base,
-            int pasoQ,
-            int pasoR,
-            double[] rnDemanda,
-            double[] rnTiempo) {
+        Punto base,
+        int pasoQ,
+        int pasoR,
+        double[] rnDemanda,
+        double[] rnTiempo) {
 
-        Punto mejor = base;
+    Punto mejor = base;
 
-        double costoQMas =
-                evaluarCosto(
+    double costoQMas =
+            evaluarCosto(
+                    base.q + pasoQ,
+                    base.r,
+                    rnDemanda,
+                    rnTiempo
+            );
+
+    if (costoQMas < mejor.costo) {
+        mejor =
+                new Punto(
                         base.q + pasoQ,
+                        base.r,
+                        costoQMas
+                );
+    }
+
+    if (base.q - pasoQ >= 1) {
+
+        double costoQMenos =
+                evaluarCosto(
+                        base.q - pasoQ,
                         base.r,
                         rnDemanda,
                         rnTiempo
                 );
 
-        if (costoQMas < mejor.costo) {
-
+        if (costoQMenos < mejor.costo) {
             mejor =
                     new Punto(
-                            base.q + pasoQ,
-                            base.r,
-                            costoQMas
-                    );
-
-        } else {
-
-            double costoQMenos =
-                    evaluarCosto(
                             base.q - pasoQ,
                             base.r,
-                            rnDemanda,
-                            rnTiempo
+                            costoQMenos
                     );
-
-            if (costoQMenos < mejor.costo) {
-
-                mejor =
-                        new Punto(
-                                base.q - pasoQ,
-                                base.r,
-                                costoQMenos
-                        );
-            }
         }
+    }
 
-        double costoRMas =
+    double costoRMas =
+            evaluarCosto(
+                    base.q,
+                    base.r + pasoR,
+                    rnDemanda,
+                    rnTiempo
+            );
+
+    if (costoRMas < mejor.costo) {
+        mejor =
+                new Punto(
+                        base.q,
+                        base.r + pasoR,
+                        costoRMas
+                );
+    }
+
+    if (base.r - pasoR >= 0) {
+
+        double costoRMenos =
                 evaluarCosto(
-                        mejor.q,
-                        mejor.r + pasoR,
+                        base.q,
+                        base.r - pasoR,
                         rnDemanda,
                         rnTiempo
                 );
 
-        if (costoRMas < mejor.costo) {
-
+        if (costoRMenos < mejor.costo) {
             mejor =
                     new Punto(
-                            mejor.q,
-                            mejor.r + pasoR,
-                            costoRMas
+                            base.q,
+                            base.r - pasoR,
+                            costoRMenos
                     );
-
-        } else {
-
-            double costoRMenos =
-                    evaluarCosto(
-                            mejor.q,
-                            mejor.r - pasoR,
-                            rnDemanda,
-                            rnTiempo
-                    );
-
-            if (costoRMenos < mejor.costo) {
-
-                mejor =
-                        new Punto(
-                                mejor.q,
-                                mejor.r - pasoR,
-                                costoRMenos
-                        );
-            }
         }
-
-        return mejor;
     }
 
+    return mejor;
+}
     static Punto hookeJeeves(
             int qInicial,
             int rInicial,
@@ -458,12 +455,9 @@ public class SimulacionInventario {
             double[] rnDemanda,
             double[] rnTiempo,
             List<IteracionHJ> historial) {
-
         int pasoQ = pasoInicialQ;
         int pasoR = pasoInicialR;
-
         int contador = 0;
-
         Punto base =
                 new Punto(
                         qInicial,
@@ -475,7 +469,6 @@ public class SimulacionInventario {
                                 rnTiempo
                         )
                 );
-
         historial.add(
                 new IteracionHJ(
                         contador,
@@ -594,7 +587,7 @@ public class SimulacionInventario {
 
         System.out.println();
         System.out.println(
-                "============================================================"
+                ""
         );
 
         System.out.println(
@@ -602,7 +595,7 @@ public class SimulacionInventario {
         );
 
         System.out.println(
-                "============================================================"
+                ""
         );
 
         System.out.printf(
@@ -614,7 +607,7 @@ public class SimulacionInventario {
         );
 
         System.out.println(
-                "------------------------------------------------------------"
+                ""
         );
 
         for (IteracionHJ h : historial) {
@@ -629,7 +622,7 @@ public class SimulacionInventario {
         }
 
         System.out.println(
-                "============================================================"
+                ""
         );
     }
 
@@ -688,16 +681,16 @@ public class SimulacionInventario {
         );
 
         System.out.println(
-                "--------------------------------------------------------------------------------------------------------------"
+                ""
         );
 
         for (int i = 0; i < DIAS; i++) {
 
             System.out.printf(
-                    "%3d | %.4f | %3d | %3d | %7d | " +
-                    "%8d | %7d | %4d | %5d | " +
-                    "%6s | %1d | %4d | %5.2f | " +
-                    "%6.2f | %6.2f | %7.2f%n",
+                    "%3d  %.4f %3d %3d  %7d  " +
+                    "%8d  %7d  %4d  %5d  " +
+                    "%6s  %1d  %4d  %5.2f  " +
+                    "%6.2f  %6.2f  %7.2f%n",
 
                     i + 1,
 
@@ -1194,7 +1187,7 @@ public class SimulacionInventario {
         System.out.println();
 
         System.out.println(
-                "=========================================="
+                ""
         );
 
         System.out.println(
@@ -1235,7 +1228,7 @@ public class SimulacionInventario {
         );
 
         System.out.println(
-                "=========================================="
+                ""
         );
     }
 
@@ -1248,7 +1241,7 @@ public class SimulacionInventario {
                 new Random();
 
         System.out.println(
-                "======================================================"
+                ""
         );
 
         System.out.println(
@@ -1256,49 +1249,36 @@ public class SimulacionInventario {
         );
 
         System.out.println(
-                "======================================================"
+                ""
         );
 
         System.out.print(
-                "q inicial para Hooke-Jeeves: "
-        );
+        "q inicial para Hooke-Jeeves: "
+);
 
-        int qInicial =
-                entrada.nextInt();
+int qInicial =
+        entrada.nextInt();
 
-        System.out.print(
-                "R inicial para Hooke-Jeeves: "
-        );
+System.out.print(
+        "R inicial para Hooke-Jeeves: "
+);
 
-        int rInicial =
-                entrada.nextInt();
+int rInicial =
+        entrada.nextInt();
 
-        System.out.print(
-                "Paso inicial para q: "
-        );
+int pasoQ = 1;
+int pasoR = 1;
 
-        int pasoQ =
-                entrada.nextInt();
+System.out.print(
+        "Numero de corridas finales: "
+);
 
-        System.out.print(
-                "Paso inicial para R: "
-        );
+int numeroCorridas =
+        entrada.nextInt();
 
-        int pasoR =
-                entrada.nextInt();
-
-        System.out.print(
-                "Numero de corridas finales: "
-        );
-
-        int numeroCorridas =
-                entrada.nextInt();
-
-        if (qInicial <= 0 ||
-            rInicial < 0 ||
-            pasoQ <= 0 ||
-            pasoR <= 0 ||
-            numeroCorridas <= 0) {
+if (qInicial <= 0 ||
+    rInicial < 0 ||
+    numeroCorridas <= 0) {
 
             System.out.println(
                     "Los valores ingresados no son validos."
@@ -1343,7 +1323,7 @@ public class SimulacionInventario {
 
         System.out.println();
         System.out.println(
-                "======================================================"
+                ""
         );
 
         System.out.println(
@@ -1351,7 +1331,7 @@ public class SimulacionInventario {
         );
 
         System.out.println(
-                "======================================================"
+                ""
         );
 
         System.out.println(
@@ -1368,7 +1348,7 @@ public class SimulacionInventario {
         );
 
         System.out.println(
-                "======================================================"
+                ""
         );
 
         System.out.println();
@@ -1461,7 +1441,7 @@ public class SimulacionInventario {
 
         System.out.println();
         System.out.println(
-                "======================================================"
+                ""
         );
 
         System.out.println(
@@ -1469,7 +1449,7 @@ public class SimulacionInventario {
         );
 
         System.out.println(
-                "======================================================"
+                ""
         );
 
         System.out.println(
@@ -1527,7 +1507,7 @@ public class SimulacionInventario {
         );
 
         System.out.println(
-                "======================================================"
+                ""
         );
 
         JFrame ventanaInventario =

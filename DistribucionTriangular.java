@@ -123,7 +123,7 @@ public class DistribucionTriangular extends JPanel {
         Scanner entrada = new Scanner(System.in);
         Random aleatorio = new Random();
 
-        System.out.println("DISTRIBUCION TRIANGULAR");
+        System.out.println("Ejercicio 2 parte 2 TRIANGULAR");
         System.out.println();
 
         // ENTRADAS
